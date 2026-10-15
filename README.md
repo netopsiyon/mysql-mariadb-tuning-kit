@@ -125,6 +125,25 @@ automatic increase of `tmp_table_size`. Open_files is not the process's total FD
    blindly extract an entire archive over `/etc`. Configuration rollback cannot recover
    lost database data.
 
+## Local checks
+
+```bash
+for f in scripts/*.sh tests/*.sh; do bash -n "$f" || exit 1; done
+bash tests/diagnostics-smoke.sh
+```
+
+The smoke test uses an isolated fake client for normal counters, zero activity,
+missing counters and connection errors. It does not prove live database compatibility.
+
+## Contributing
+
+Report exact engine/version, RAM/service limits, workload and reproducible measurements.
+Remove passwords, host identities and customer data before sharing reports.
+
+Maintained by [Netopsiyon](https://www.netopsiyon.com).
+
+---
+
 ## Türkçe kullanım
 
 Bu depo, Linux için başlangıç yapılandırmaları ve salt okunur tanılama betikleri içerir.
@@ -152,20 +171,3 @@ Disk geçici tablo oranını düşürmek için bellek limitlerini körlemesine a
 önce sorgu planlarını inceleyin. Sayaçlar başlangıçtan veya sıfırlamadan beri birikir.
 24-48 saatlik temsili yük ve aralıklı ölçümlerle değerlendirin. Etkinlik yoksa oranlar
 `N/A` olarak gösterilir; eksik sayaçlar hata verir.
-
-## Local checks
-
-```bash
-for f in scripts/*.sh tests/*.sh; do bash -n "$f" || exit 1; done
-bash tests/diagnostics-smoke.sh
-```
-
-The smoke test uses an isolated fake client for normal counters, zero activity,
-missing counters and connection errors. It does not prove live database compatibility.
-
-## Contributing
-
-Report exact engine/version, RAM/service limits, workload and reproducible measurements.
-Remove passwords, host identities and customer data before sharing reports.
-
-Maintained by [Netopsiyon](https://www.netopsiyon.com).
