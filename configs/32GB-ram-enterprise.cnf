@@ -1,0 +1,53 @@
+# =====================================================================
+# MySQL / MariaDB starting configuration - validate on your exact version
+# Profile : 32GB RAM - Enterprise / Heavy Workload Database
+# Target  : InnoDB ~22GB (68% RAM) | Max Connections: 600
+# Repo    : https://github.com/netopsiyon/mysql-mariadb-tuning-kit
+# =====================================================================
+
+# Review existing settings before merging; see README.md.
+# Redo sizing and storage I/O settings intentionally use server defaults.
+# No absolute slow-log path: retain the server default or existing configured path.
+[mysqld]
+# --- Basic Settings ---
+default_storage_engine          = InnoDB
+character_set_server            = utf8mb4
+collation_server                = utf8mb4_unicode_ci
+max_allowed_packet              = 256M
+
+# --- Connection & Thread Settings ---
+max_connections                 = 600
+thread_cache_size               = 256
+interactive_timeout             = 300
+wait_timeout                    = 300
+
+# --- Per-Thread Buffers ---
+sort_buffer_size                = 512K
+read_buffer_size                = 256K
+read_rnd_buffer_size            = 256K
+join_buffer_size                = 512K
+
+# --- Temp Tables & Caches ---
+tmp_table_size                  = 32M
+max_heap_table_size             = 32M
+table_open_cache                = 32000
+table_definition_cache          = 16000
+open_files_limit                = 200000
+
+# --- MyISAM Fallback ---
+key_buffer_size                 = 128M
+
+# --- InnoDB Tuning (22GB Buffer Pool) ---
+innodb_buffer_pool_size         = 22G
+innodb_log_buffer_size          = 128M
+innodb_flush_log_at_trx_commit  = 1
+innodb_file_per_table           = 1
+innodb_lock_wait_timeout        = 30
+innodb_buffer_pool_dump_at_shutdown = 1
+innodb_buffer_pool_load_at_startup  = 1
+
+# --- Slow Query Logging ---
+slow_query_log                  = 1
+# Prepare log rotation and monitor disk usage before enabling on a busy host.
+long_query_time                 = 1.0
+log_queries_not_using_indexes   = 0
